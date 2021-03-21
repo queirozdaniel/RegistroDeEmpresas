@@ -1,0 +1,153 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<f:event listener="#{funcionarioBean.carregarEmpresas}" type="preRenderView"/>
+
+<ui:composition template="template.xhtml">
+    <ui:param name="titulo" value="Cadastro de Empresas"/>
+    <ui:define name="conteudo">
+
+        <div style="padding-right: 10px;">
+            <h1>Cadastro de usuário</h1>
+
+            <h:form id="searchForm">
+                <h:panelGrid columns="4">
+                    ID do funcionario:
+                    <h:inputText id="searchId" value="#{funcionarioBean.funcionarioID}" binding="#{funcionarioBean.searchInputText}"
+                                 required="true" requiredMessage="Digite o Id" converterMessage="O Id não é válido"
+                                 validatorMessage="O Id não é válido">
+                        <f:validateLongRange minimum="1" maximum="1000"/>
+                    </h:inputText>
+                    <h:commandButton id="searchId_btn" value="Pesquisar" styleClass="btn_page btn_page_pesquisar">
+                        <f:ajax listener="#{funcionarioBean.pesquisar}" execute=":searchForm:searchId"
+                                render="editForm @form"/>
+                    </h:commandButton>
+                    <h:message for="searchId" style="color: red;"/>
+                </h:panelGrid>
+            </h:form>
+            <hr /> <br />
+
+            <h:form  id="editForm">
+                <h:panelGrid columns="3">
+                    Nome Completo:
+                    <h:inputText id="nome" value="#{funcionarioBean.funcionario.nome}" required="true"
+                                 requiredMessage="Digite o nome completdo do Usuário"/>
+                    <h:message for="nome" style="color: red;"/>
+
+                    CPF:
+                    <h:inputText id="cpf" value="#{funcionarioBean.funcionario.cpf}" required="true"
+                                 requiredMessage="Digite o CPF do usuário"/>
+                    <h:message for="cpf" style="color: red;"/>
+
+
+                    Cargo:
+                    <h:inputText id="cargo" value="#{funcionarioBean.funcionario.cargo}" required="true"
+                                 requiredMessage="Digite o cargo do usuário"/>
+                    <h:message for="cargo" style="color: red;"/>
+
+                    Empresa:
+                    <h:selectOneMenu value="#{funcionarioBean.empresaID}"
+                                     valueChangeListener="#{funcionarioBean.carregarDadosEmpresa}" rendered="true"
+                                     requiredMessage="É obrigatorio a seleção de um uma empresa">
+                        <f:selectItem itemValue="-" itemLabel="-" noSelectionOption="true"/>
+                        <f:selectItems value="#{funcionarioBean.empresas}" var="emp" itemValue="#{emp.id}"
+                                       itemLabel="#{emp.nomeFantasia}"/>
+                        <f:ajax event="valueChange" execute="@this" render=":empresa"/>
+                    </h:selectOneMenu>
+
+                    <h:inputHidden value="#{funcionarioBean.funcionario.id}"/>
+
+                    <br/>
+
+                    <h:commandButton value="Cadastrar Funcionário" styleClass="btn_page btn_page_cadastro" action="#{funcionarioBean.cadastroFuncionario}">
+                    </h:commandButton>
+
+                    <h:commandButton value="Excluir Funcionário" styleClass="btn_page btn_page_excluir" action="#{funcionarioBean.excluirFuncionario}"/>
+
+                </h:panelGrid>
+
+            </h:form>
+        </div>
+
+        <div>
+            <h2>Todas Funcionários</h2>
+            <h:panelGroup id="listaEmpresas" rendered="#{funcionarioBean.funcionarios.size() > 0}">
+                <table class="tabela">
+                    <tr>
+                        <th class="cabecalho" colspan="6">Funcionários já cadastradas</th>
+                    </tr>
+                    <tr>
+                        <th class="cabecalho"># </th>
+                        <th class="cabecalho">ID</th>
+                        <th class="cabecalho">Nome Completo</th>
+                        <th class="cabecalho">Empresa</th>
+                        <th class="cabecalho">Cargo</th>
+                        <th class="cabecalho">CPF</th>
+                    </tr>
+                    <tr>
+                        <ui:repeat value="#{funcionarioBean.funcionarios}" var="f" varStatus="st">
+                            <tr class="tabela_item">
+                                <td class="colNumero">#{st.index + 1}</td>
+
+                                <td class="colData">
+                                    <h:outputText value="#{f.id}">
+                                    </h:outputText>
+                                </td>
+
+                                <td class="colData">
+                                    <h:outputText value="#{f.nome}">
+                                    </h:outputText>
+                                </td>
+
+                                <td class="colDesc">
+                                    <h:outputText value="#{f.empresa.nomeFantasia}"/>
+                                </td>
+
+                                <td class="colValor">
+                                    <h:outputText value="#{f.cargo}">
+                                    </h:outputText>
+                                </td>
+
+                                <td class="colValor">
+                                    <h:outputText value="#{f.cpf}">
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                    </tr>
+                </table>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{funcionarioBean.funcionarios.size() == 0}">
+                <h:outputText value="Não existem funcionarios cadastrads"/>
+                <br/><br/>
+            </h:panelGroup>
+        </div>
+
+        <script>
+            let items = document.querySelectorAll(".tabela_item");
+            let searchField = document.getElementById("searchForm:searchId");
+            let searchBtn = document.getElementById("searchForm:searchId_btn")
+
+            items.forEach(
+                item => {
+                    item.addEventListener('click', () => {
+                        console.log(item.children[1].innerHTML.trim())
+                        searchField.value = item.children[1].innerHTML.trim();
+                        searchBtn.click();
+                    })
+                }
+            )
+            console.log("Testes inside file")
+        </script>
+
+    </ui:define>
+</ui:composition>
+
+</html>

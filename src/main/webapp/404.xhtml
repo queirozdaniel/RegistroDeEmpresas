@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xml:lang="en" lang="en">
+
+<h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Página não encontrada</title>
+</h:head>
+<h:body>
+
+    <div class="container card_align">
+        <div class="card">
+            <h1>404</h1>
+            <p>Página não encontrada</p>
+            <h:form>
+                <h:commandLink action="index" value="Voltar para página inicial"/>
+            </h:form>
+        </div>
+    </div>
+
+    <style>
+        .card_align {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .card {
+            box-shadow: 4px 4px 15px rgba(0,0,0, 0.1);
+
+            padding: 15px 0;
+            text-align: center;
+            margin-top: 120px;
+            border-radius: 4px;
+        }
+        .card h1 {
+            font-size: 4.5rem;
+            color: #be1c1c;
+            text-shadow: 12px 6px 9px rgba(190,28,28,0.55);
+        }
+        .card p {
+            font-size: 1.5rem;
+        }
+    </style>
+</h:body>
+</html>

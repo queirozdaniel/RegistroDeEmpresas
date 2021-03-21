@@ -1,0 +1,139 @@
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="template.xhtml">
+    <ui:param name="titulo" value="Cadastro de Empresas"/>
+    <ui:define name="conteudo">
+
+        <div>
+            <h1>Cadastro de empressas </h1>
+            <h:form id="searchForm">
+                <h:panelGrid columns="4">
+                    ID da empresa:
+                    <h:inputText id="searchId" value="#{empresaBean.empresaID}" binding="#{empresaBean.searchInputText}"
+                                 required="true" requiredMessage="Digite o Id" converterMessage="O Id não é válido"
+                                 validatorMessage="O Id não é válido">
+                        <f:validateLongRange minimum="1" maximum="1000"/>
+                    </h:inputText>
+                    <h:commandButton id="searchId_btn" value="Pesquisar"  styleClass="btn_page btn_page_pesquisar">
+                        <f:ajax listener="#{empresaBean.pesquisar}" execute=":searchForm:searchId"
+                                render="editForm @form"/>
+                    </h:commandButton>
+                    <h:message for="searchId" style="color: red;"/>
+                </h:panelGrid>
+            </h:form>
+
+            <hr/>
+            <br/>
+
+            <h:form id="editForm">
+                <h:panelGrid columns="3">
+                    Razão Social:
+                    <h:inputText id="razao" value="#{empresaBean.empresa.razaoSocial}" required="true"
+                                 requiredMessage="Digite a Razão Social da empresa"/>
+                    <h:message for="razao" style="color: red;"/>
+
+                    Nome Fantasia:
+                    <h:inputText id="nome" value="#{empresaBean.empresa.nomeFantasia}" required="true"
+                                 requiredMessage="Digite o Nome Fantasia da empresa"/>
+                    <h:message for="nome" style="color: red;"/>
+
+                    Ativo:
+                    <h:selectBooleanCheckbox value="#{empresaBean.empresa.ativo}"/>
+                </h:panelGrid>
+                <h:inputHidden value="#{empresaBean.empresa.id}"/>
+
+                <br/>
+
+                <h:commandButton value="Gravar dados" styleClass="btn_page btn_page_cadastro"
+                                 action="#{empresaBean.cadastraEmpresa}">
+                </h:commandButton>
+
+                <h:commandButton value="Excluir empresa" styleClass="btn_page btn_page_excluir" action="#{empresaBean.excluir}">
+                </h:commandButton>
+
+            </h:form>
+        </div>
+
+
+        <div>
+            <h2>Todas empresas</h2>
+            <h:panelGroup id="listaEmpresas" rendered="#{empresaBean.empresas.size() > 0}">
+                <table class="tabela">
+                    <tr>
+                        <th class="cabecalho" colspan="6">Empresas já cadastradas</th>
+                    </tr>
+                    <tr>
+                        <th class="cabecalho">#</th>
+                        <th class="cabecalho">ID</th>
+                        <th class="cabecalho">Razão Social</th>
+                        <th class="cabecalho">Nome Fantasia</th>
+                        <th class="cabecalho">Qtd de Funcionários</th>
+                        <th class="cabecalho">Ativo</th>
+                    </tr>
+                    <tr>
+                        <ui:repeat value="#{empresaBean.empresas}" var="emp" varStatus="st">
+                            <tr class="tabela_item">
+                                <td class="colNumero">#{st.index + 1}</td>
+
+                                <td>
+                                    <h:outputText value="#{emp.id}">
+                                    </h:outputText>
+                                </td>
+
+                                <td>
+                                    <h:outputText value="#{emp.razaoSocial}">
+                                    </h:outputText>
+                                </td>
+
+                                <td>
+                                    <h:outputText value="#{emp.nomeFantasia}"/>
+                                </td>
+
+                                <td>
+                                    <h:outputText value="#{emp.totalDeFuncionarios}">
+                                    </h:outputText>
+                                </td>
+
+                                <td>
+                                    <h:outputText value="#{emp.ativo ? 'Ativo' : 'Inativo'}" />
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                    </tr>
+                </table>
+            </h:panelGroup>
+
+            <h:panelGroup rendered="#{empresaBean.empresas.size() == 0}">
+                <h:outputText value="Não existem empresas cadastradas"/>
+                <br/><br/>
+            </h:panelGroup>
+        </div>
+
+        <script>
+            let items = document.querySelectorAll(".tabela_item");
+            let searchField = document.getElementById("searchForm:searchId");
+            let searchBtn = document.getElementById("searchForm:searchId_btn")
+
+            items.forEach(
+                item => {
+                    item.addEventListener('click', () => {
+                        console.log(item.children[1].innerHTML.trim())
+                        searchField.value = item.children[1].innerHTML.trim();
+                        searchBtn.click();
+                    })
+                }
+            )
+            console.log("Testes inside file")
+        </script>
+
+    </ui:define>
+</ui:composition>
+
+</html>

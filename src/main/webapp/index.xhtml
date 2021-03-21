@@ -1,0 +1,31 @@
+
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="template.xhtml">
+    <ui:param name="titulo" value="Sistema para gerenciar empresas" />
+    <ui:define name="conteudo">
+
+        <div>
+            <h1>Página inicial</h1>
+            <p>Sistema criado para gerenciar empresas e seus funcionários. Fazendo um CRUD completo:</p>
+            <ul>
+                <li>Cadastro/Atualização/Exclusão de  completo de uma empresa</li>
+                <li>Cadastro/Atualização/Exclusão completo de um funcionário para a empresa</li>
+            </ul>
+        </div>
+
+        <div>
+            <h2>Informação sobre sistema</h2>
+            <p>Na <b>exclusão</b> de uma empresa, seus funcionários também são excluídos do sistema</p>
+        </div>
+
+    </ui:define>
+</ui:composition>
+
+</html>

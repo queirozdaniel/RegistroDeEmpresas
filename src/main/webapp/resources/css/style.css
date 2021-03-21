@@ -1,0 +1,86 @@
+* {
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #b6c3c4;
+}
+
+.container {
+    width: 960px;
+    margin: 10px auto;
+    background-color: white;
+}
+
+.title_page {
+    font-size: 2.25rem;
+}
+
+.btn_page {
+    margin: 5px;
+    border: none;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    background: #d71c43;
+}
+
+.btn_page:hover {
+    background: #be1939;
+}
+
+.btn_page_cadastro {
+    background: #298122;
+}
+
+.btn_page_cadastro:hover {
+    background: #219614;
+}
+
+.btn_page_excluir {
+    background: #be1c1c;
+}
+
+.btn_page_excluir:hover {
+    background: #d00303;
+}
+
+.btn_page_pesquisar {
+    background: #138eae;
+}
+
+.btn_page_pesquisar:hover {
+    background: #03afdb;
+}
+
+.tabela {
+    border: 3px solid gray;
+    width: 500px;
+    collapse: separete;
+}
+.cabecalho {
+    text-align: center;
+    padding: 5px 10px;
+    color: snow;
+    background: slategray;
+}
+
+.tabela_item:hover {
+    background: #d7e1e5;
+ }
+
+.colNumero {
+    background: #b6c3c4;
+    padding: 3px;
+}
+
+
+.body_container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
